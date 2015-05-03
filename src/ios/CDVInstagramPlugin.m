@@ -70,7 +70,7 @@ static NSString *InstagramId = @"com.burbn.instagram";
         NSString *tmpDir = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
         NSString *path = [tmpDir stringByAppendingPathComponent:@"instagram.igo"];
         
-        [imageObj writeToFile:path atomically:true];
+        [imageObj writeToFile:path atomically:false];
         
         self.interactionController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:path]];
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
