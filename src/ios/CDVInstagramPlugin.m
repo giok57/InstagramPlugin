@@ -67,21 +67,18 @@ static NSString *InstagramId = @"com.burbn.instagram";
         
         self.interactionController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:path]];
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-        [library writeVideoAtPathToSavedPhotosAlbum:[NSURL fileURLWithPath:path] completionBlock:^(NSURL *assetURL, NSError *error){
-            if(error) {
-                NSLog(@"CameraViewController: Error on saving movie : %@ {imagePickerController}", error);
-            }
-            else {
-                NSLog(@"URL: %@", assetURL);
-                NSURL *instagramURL = [NSURL URLWithString:[NSString stringWithFormat:@"instagram://library?AssetPath=%@&InstagramCaption=%@", [assetURL.absoluteString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]], [caption stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]]]];
-                [[UIApplication sharedApplication] openURL:instagramURL];
-            }
-        }];
+        UISaveVideoAtPathToSavedPhotosAlbum([path relativePath], self,@selector(movie:didFinishSavingWithError:contextInfo:), nil);
         
     } else {
         result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageToErrorObject:1];
         [self.commandDelegate sendPluginResult:result callbackId: self.callbackId];
     }
+}
+
+- (void) video: (NSString *) videoPath didFinishSavingWithError: (NSError *) error contextInfo: (void *) contextInfo {
+    NSLog(@"Finished saving video: %@", videoPath);
+    NSURL *instagramURL = [NSURL URLWithString:[NSString stringWithFormat:@"instagram://library?AssetPath=%@", [videoPath.absoluteString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]]]];
+    [[UIApplication sharedApplication] openURL:instagramURL];
 }
 
 - (void) documentInteractionController: (UIDocumentInteractionController *) controller willBeginSendingToApplication: (NSString *) application {
