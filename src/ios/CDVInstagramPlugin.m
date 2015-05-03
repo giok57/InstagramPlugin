@@ -67,10 +67,19 @@ static NSString *InstagramId = @"com.burbn.instagram";
         [imageObj writeToFile:path atomically:true];
         
         self.interactionController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:path]];
+        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+        [library writeVideoAtPathToSavedPhotosAlbum:path completionBlock:^(NSURL *assetURL, NSError *error){
+            if(error) {
+                NSLog(@"CameraViewController: Error on saving movie : %@ {imagePickerController}", error);
+            }
+            else {
+                NSLog(@"URL: %@", assetURL);
+                NSURL *instagramURL = [NSURL URLWithString:[NSString stringWithFormat:@"instagram://library?AssetPath=%@&InstagramCaption=%@", [assetURL.absoluteString urlencodedString], [caption urlencodedString]]];
+                [[UIApplication sharedApplication] openURL:instagramURL];
+            }
+        }];
         self.interactionController .UTI = @"com.instagram.exclusivegram";
-        if (caption) {
-            self.interactionController .annotation = @{@"InstagramCaption" : caption};
-        }
+
         self.interactionController .delegate = self;
         [self.interactionController presentOpenInMenuFromRect:CGRectZero inView:self.webView animated:YES];
         
@@ -78,6 +87,10 @@ static NSString *InstagramId = @"com.burbn.instagram";
         result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageToErrorObject:1];
         [self.commandDelegate sendPluginResult:result callbackId: self.callbackId];
     }
+}
+
+- (NSString*)urlencodedString{
+    return [self stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
 }
 
 - (void) documentInteractionController: (UIDocumentInteractionController *) controller willBeginSendingToApplication: (NSString *) application {
@@ -97,5 +110,7 @@ static NSString *InstagramId = @"com.burbn.instagram";
         [self.commandDelegate sendPluginResult:result callbackId: self.callbackId];
     }
 }
+
+
 
 @end
