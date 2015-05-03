@@ -48,6 +48,12 @@ static NSString *InstagramId = @"com.burbn.instagram";
     
 }
 
+- (void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
+    NSLog(@"Finished saving video: %@", videoPath);
+    NSURL *instagramURL = [NSURL URLWithString:[NSString stringWithFormat:@"instagram://library?AssetPath=%@", [videoPath stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]]]];
+    [[UIApplication sharedApplication] openURL:instagramURL];
+}
+
 - (void)share:(CDVInvokedUrlCommand*)command {
     self.callbackId = command.callbackId;
     self.toInstagram = FALSE;
@@ -76,11 +82,6 @@ static NSString *InstagramId = @"com.burbn.instagram";
     }
 }
 
-- (void) video: (NSString *) videoPath didFinishSavingWithError: (NSError *) error contextInfo: (void *) contextInfo {
-    NSLog(@"Finished saving video: %@", videoPath);
-    NSURL *instagramURL = [NSURL URLWithString:[NSString stringWithFormat:@"instagram://library?AssetPath=%@", [videoPath stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]]]];
-    [[UIApplication sharedApplication] openURL:instagramURL];
-}
 
 - (void) documentInteractionController: (UIDocumentInteractionController *) controller willBeginSendingToApplication: (NSString *) application {
     if ([application isEqualToString:InstagramId]) {
