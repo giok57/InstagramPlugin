@@ -67,7 +67,8 @@ static NSString *InstagramId = @"com.burbn.instagram";
         
         self.interactionController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:path]];
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-        UISaveVideoAtPathToSavedPhotosAlbum([path relativePath], self,@selector(movie:didFinishSavingWithError:contextInfo:), nil);
+        NSLog(@"Path: %@", path);
+        UISaveVideoAtPathToSavedPhotosAlbum(path, self,@selector(movie:didFinishSavingWithError:contextInfo:), nil);
         
     } else {
         result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageToErrorObject:1];
