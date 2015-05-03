@@ -68,7 +68,7 @@ static NSString *InstagramId = @"com.burbn.instagram";
         NSData *imageObj = [NSData dataFromBase64String:objectAtIndex0];
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *tmpDir = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
-        NSString *path = [tmpDir stringByAppendingPathComponent:@"instagram.igo"];
+        NSString *path = [tmpDir stringByAppendingPathComponent:@"instagram.mp4"];
         
         [imageObj writeToFile:path atomically:YES];
         
