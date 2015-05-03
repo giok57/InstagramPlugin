@@ -56,7 +56,6 @@ static NSString *InstagramId = @"com.burbn.instagram";
     
     CDVPluginResult *result;
     
-    NSURL *instagramURL = [NSURL URLWithString:@"instagram://app"];
     if ([[UIApplication sharedApplication] canOpenURL:instagramURL]) {
         NSLog(@"open in instagram");
         
@@ -68,7 +67,7 @@ static NSString *InstagramId = @"com.burbn.instagram";
         
         self.interactionController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:path]];
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-        [library writeVideoAtPathToSavedPhotosAlbum:[NSURL URLWithString:path] completionBlock:^(NSURL *assetURL, NSError *error){
+        [library writeVideoAtPathToSavedPhotosAlbum:[NSURL URLWithString:[path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] completionBlock:^(NSURL *assetURL, NSError *error){
             if(error) {
                 NSLog(@"CameraViewController: Error on saving movie : %@ {imagePickerController}", error);
             }
@@ -78,10 +77,6 @@ static NSString *InstagramId = @"com.burbn.instagram";
                 [[UIApplication sharedApplication] openURL:instagramURL];
             }
         }];
-        self.interactionController .UTI = @"com.instagram.exclusivegram";
-
-        self.interactionController .delegate = self;
-        [self.interactionController presentOpenInMenuFromRect:CGRectZero inView:self.webView animated:YES];
         
     } else {
         result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageToErrorObject:1];
