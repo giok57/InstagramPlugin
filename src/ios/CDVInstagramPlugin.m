@@ -85,8 +85,8 @@ static NSString *InstagramId = @"com.burbn.instagram";
                     if (error) {
                         NSLog(@"Error: %@", error);
                     }else{
-                        NSLog(@"Finished saving video: %@", assetURL.absolutePath);
-                        NSURL *instagramURL = [NSURL URLWithString:[NSString stringWithFormat:@"instagram://library?AssetPath=%@", [assetURL.absolutePath stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]]]];
+                        NSLog(@"Finished saving video: %@", assetURL.absoluteString);
+                        NSURL *instagramURL = [NSURL URLWithString:[NSString stringWithFormat:@"instagram://library?AssetPath=%@", [assetURL.absoluteString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]]]];
                         [[UIApplication sharedApplication] openURL:instagramURL];
                                             
                     }
