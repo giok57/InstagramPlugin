@@ -70,12 +70,12 @@ static NSString *InstagramId = @"com.burbn.instagram";
         NSString *tmpDir = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
         NSString *path = [tmpDir stringByAppendingPathComponent:@"instagram.igo"];
         
-        [imageObj writeToFile:path atomically:false];
+        [imageObj writeToFile:path atomically:true];
         
         self.interactionController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:path]];
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
         NSLog(@"Path: %@", path);
-        UISaveVideoAtPathToSavedPhotosAlbum(path, self,@selector(video:didFinishSavingWithError:contextInfo:), nil);
+        UISaveVideoAtPathToSavedPhotosAlbum([mediaURL path], self,@selector(video:didFinishSavingWithError:contextInfo:), nil);
         
     } else {
         result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageToErrorObject:1];
