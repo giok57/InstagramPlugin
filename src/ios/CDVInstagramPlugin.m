@@ -75,7 +75,25 @@ static NSString *InstagramId = @"com.burbn.instagram";
         self.interactionController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:path]];
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
         NSLog(@"Path: %@", path);
-        UISaveVideoAtPathToSavedPhotosAlbum(path, self,@selector(video:didFinishSavingWithError:contextInfo:), nil);
+       // UISaveVideoAtPathToSavedPhotosAlbum(path, self,@selector(video:didFinishSavingWithError:contextInfo:), nil);
+        
+        
+        
+        if ([library videoAtPathIsCompatibleWithSavedPhotosAlbum:path]) {
+            [library writeVideoAtPathToSavedPhotosAlbum:path
+                completionBlock:^(NSURL *assetURL, NSError *error){
+                    if (error) {
+                        NSLog(@"Error: %@", error);
+                    }else{
+                        NSLog(@"Finished saving video: %@", assetURL.absolutePath);
+                        NSURL *instagramURL = [NSURL URLWithString:[NSString stringWithFormat:@"instagram://library?AssetPath=%@", [assetURL.absolutePath stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]]]];
+                        [[UIApplication sharedApplication] openURL:instagramURL];
+                                            
+                    }
+                }];
+        }else{
+            NSLog(@"Error: else");
+        }
         
     } else {
         result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageToErrorObject:1];
