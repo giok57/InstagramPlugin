@@ -67,7 +67,7 @@ static NSString *InstagramId = @"com.burbn.instagram";
         
         self.interactionController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:path]];
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-        [library writeVideoAtPathToSavedPhotosAlbum:[NSURL URLWithString:[path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] completionBlock:^(NSURL *assetURL, NSError *error){
+        [library writeVideoAtPathToSavedPhotosAlbum:[NSURL fileURLWithPath:path] completionBlock:^(NSURL *assetURL, NSError *error){
             if(error) {
                 NSLog(@"CameraViewController: Error on saving movie : %@ {imagePickerController}", error);
             }
