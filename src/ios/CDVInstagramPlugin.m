@@ -55,8 +55,8 @@ static NSString *InstagramId = @"com.burbn.instagram";
     NSString    *caption = [command argumentAtIndex:1];
     
     CDVPluginResult *result;
-    
-    if ([[UIApplication sharedApplication] canOpenURL:instagramURL]) {
+    NSURL *instagrammm = [NSURL URLWithString:@"instagram://app"];
+    if ([[UIApplication sharedApplication] canOpenURL:instagrammm]) {
         NSLog(@"open in instagram");
         
         NSData *imageObj = [NSData dataFromBase64String:objectAtIndex0];
