@@ -66,7 +66,7 @@ static NSString *InstagramId = @"com.burbn.instagram";
         NSLog(@"open in instagram");
         
         NSData *imageObj = [NSData dataFromBase64String:objectAtIndex0];
-        NSString *tmpDir = NSHomeDirectory();
+        NSString *tmpDir = applicationDocumentsDirectory();
         NSString *path = [tmpDir stringByAppendingPathComponent:@"instagram.igo"];
         
         [imageObj writeToFile:path atomically:true];
@@ -82,6 +82,11 @@ static NSString *InstagramId = @"com.burbn.instagram";
     }
 }
 
++ (NSString *) applicationDocumentsDirectory {    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
+    return basePath;
+}
 
 - (void) documentInteractionController: (UIDocumentInteractionController *) controller willBeginSendingToApplication: (NSString *) application {
     if ([application isEqualToString:InstagramId]) {
