@@ -23,7 +23,8 @@
 */
 
 #import <Foundation/Foundation.h>
-
+#import <AssetsLibrary/AssetsLibrary.h>
+#import <UIKit/UIKit.h>
 #import <Cordova/CDVPlugin.h>
 
 @interface CDVInstagramPlugin : CDVPlugin <UIDocumentInteractionControllerDelegate> {}
