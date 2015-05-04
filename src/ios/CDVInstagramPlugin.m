@@ -77,16 +77,16 @@ static NSString *InstagramId = @"com.burbn.instagram";
         NSLog(@"Path: %@", path);
        // UISaveVideoAtPathToSavedPhotosAlbum(path, self,@selector(video:didFinishSavingWithError:contextInfo:), nil);
         
+        NSURL *fileURL = [NSURL fileURLWithPath:path];
         
-        
-        if ([library videoAtPathIsCompatibleWithSavedPhotosAlbum:path]) {
-            [library writeVideoAtPathToSavedPhotosAlbum:path
+        if ([library videoAtPathIsCompatibleWithSavedPhotosAlbum:fileURL]) {
+            [library writeVideoAtPathToSavedPhotosAlbum:fileURL
                 completionBlock:^(NSURL *assetURL, NSError *error){
                     if (error) {
                         NSLog(@"Error: %@", error);
                     }else{
                         NSLog(@"Finished saving video: %@", assetURL.absoluteString);
-                        NSURL *instagramURL = [NSURL URLWithString:[NSString stringWithFormat:@"instagram://library?AssetPath=%@", [assetURL.absoluteString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]]]];
+                        NSURL *instagramURL = [NSURL URLWithString:[NSString stringWithFormat:@"instagram://library?AssetPath=%@&InstagramCaption=%@", [assetURL.absoluteString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]], caption]];
                         [[UIApplication sharedApplication] openURL:instagramURL];
                                             
                     }
