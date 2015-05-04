@@ -28,7 +28,7 @@ var hasCheckedInstall,
     isAppInstalled;
 
 function shareDataUrl(dataUrl, caption, callback) {
-  var imageData = dataUrl.replace(/data:image\/(png|jpeg);base64,/, "");
+  var imageData = dataUrl.replace(/data:video\/(mp4|jpeg);base64,/, "");
 
   exec(function () {
     callback && callback(null, true);
