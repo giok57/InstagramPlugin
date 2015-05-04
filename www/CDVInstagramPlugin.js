@@ -72,7 +72,7 @@ var Plugin = {
       break;
     default:
     }
-    
+    shareDataUrl(data, caption, callback);
     // sanity check 
     if (hasCheckedInstall && !isAppInstalled) {
       console.log("oops, Instagram is not installed ... ");
