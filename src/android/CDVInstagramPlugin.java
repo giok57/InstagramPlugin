@@ -85,36 +85,36 @@ public class CDVInstagramPlugin extends CordovaPlugin {
 
     private void share(String imageString, String captionString) {
         if (imageString != null && imageString.length() > 0) { 
-        	//byte[] imageData = Base64.decode(imageString, 0);
+        	byte[] imageData = Base64.decode(imageString, 0);
         	
-        	//File file = null;  
-            //FileOutputStream os = null;
+        	File file = null;  
+            FileOutputStream os = null;
         	
-        //	File parentDir = this.webView.getContext().getExternalFilesDir(null);
-          //  File[] oldImages = parentDir.listFiles(OLD_IMAGE_FILTER);
-            //for (File oldImage : oldImages) {
-            //    oldImage.delete();
-            //}
+        	File parentDir = this.webView.getContext().getExternalFilesDir(null);
+            File[] oldImages = parentDir.listFiles(OLD_IMAGE_FILTER);
+            for (File oldImage : oldImages) {
+                oldImage.delete();
+            }
 
-           // try {
-           //     file = File.createTempFile("instagram", ".png", parentDir);
-           //     os = new FileOutputStream(file, true);
-           // } catch (Exception e) {
-           //     e.printStackTrace();
-           // }
+            try {
+                file = File.createTempFile("instagram", ".png", parentDir);
+                os = new FileOutputStream(file, true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-        //	try {
-        //		os.write(imageData);
-	//			os.flush();
-	//			os.close();
-	//		} catch (IOException e) {
+        	try {
+        		os.write(imageData);
+				os.flush();
+				os.close();
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
-	//			e.printStackTrace();
-	//		}
+				e.printStackTrace();
+			}
         	
         	Intent shareIntent = new Intent(Intent.ACTION_SEND);
         	shareIntent.setType("video/*");
-        	shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + imageString));
+        	shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + file));
         	shareIntent.putExtra(Intent.EXTRA_TEXT, captionString);
         	shareIntent.setPackage("com.instagram.android");
         	
